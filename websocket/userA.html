@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Websocket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="../library/assets/css/lib/bootstrap.css" rel="stylesheet">
+<link href="../library/assets/css/lib/bootstrap-responsive.css" rel="stylesheet">
+<link href="../library/assets/css/boo-extension.css" rel="stylesheet">
+<link href="../library/assets/css/boo.css" rel="stylesheet">
+<link href="../library/assets/css/style.css" rel="stylesheet">
+<link href="../library/assets/css/boo-coloring.css" rel="stylesheet">
+<link href="../library/assets/css/boo-utility.css" rel="stylesheet">
+
+
+<link rel="shortcut icon" href="../library/assets/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../library/assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../library/assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../library/assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="../library/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body class="sidebar-left ">
+<div class="page-container">
+
+    <!-- // header-container -->
+    
+    <div id="main-container">
+        <div id="page-content" class="page-content">
+         
+            <section>
+                <div class="row-fluid">
+
+                    <div class="span12 grider">
+    
+                        <div class="widget widget-box widget-table widget-list">
+                            <div class="widget-header">
+                                <h4><i class="fontello-icon-user-pair"></i> 对话列表</h4>
+                            </div>
+                            <dvi style="width: 100%;height: 800px;overflow-y: scroll;float: left;">
+                                <table id="lastLogedTable" class="table table-striped table-hover thumb-small bg-blue-light">
+                                    <thead>
+                                        <tr class="condensed">
+                                            <th class="span2">用户<span class="column-sorter"></span></th>
+                                            <th scope="">对话<span class="column-sorter"></span></th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody class="media-thumb">
+                                        <tr>
+                                            <td><span class="img-shadow"><img class="media-object thumb" src="../library/assets/img/demo/demo-avatar9601.jpg"></span></td>
+                                            <td><div>semper@example.edu</div></td>
+           
+                                        </tr>
+                                        <tr>
+                                            <td><span class="img-shadow"><img class="media-object thumb" src="../library/assets/img/demo/demo-avatar9602.jpg"></span></td>
+                                            <td><div>commodo@example.ca</div></td>
+
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                            </dvi>
+                        </div>                            
+                    </div>                        
+                </div>               
+            </section>
+
+
+        </div>            
+    </div>
+    <footer id="footer-fix" style="height: 100px;">
+        <div class="controls">
+            <textarea placeholder="userA：请输入对话详情" style="width: 89%;height: 100px;float: left;"></textarea>
+            <button type="button" class="btn btn-green" style="width: 10%;height: 100px;float: right;font-size: 25px">发送</button>
+        </div>
+    </footer>
+</div>
+
+
+<script src="../library/assets/js/lib/jquery.js"></script> 
+<script src="../library/assets/js/lib/jquery-ui.js"></script>
+<script src="../library/assets/js/lib/bootstrap/bootstrap.js"></script> 
+<script>
+    $(function(){
+        var wsurl = 'ws://127.0.0.1:9505/socket.php';//路径自定义
+        var websocket;
+        var i = 0;
+        if(window.WebSocket){
+            websocket = new WebSocket(wsurl);
+
+            //连接建立
+            websocket.onopen = function(evevt){
+                console.log("Connected to WebSocket server.");
+                $('.show-area').append('<p class="bg-info message"><i class="glyphicon glyphicon-info-sign"></i>Connected to WebSocket server!</p>');
+            }
+            //收到消息
+            websocket.onmessage = function(event) {
+                var msg = JSON.parse(event.data); //解析收到的json消息数据
+
+                var type = msg.type; // 消息类型
+                var umsg = msg.message; //消息文本
+                var uname = msg.name; //发送人
+                i++;
+                if(type == 'usermsg'){
+                    $('.show-area').append('<p class="bg-success message"><i class="glyphicon glyphicon-user"></i><a name="'+i+'"></a><span class="label label-primary">'+uname+' say: </span>'+umsg+'</p>');
+                }
+                if(type == 'system'){
+                    $('.show-area').append('<p class="bg-warning message"><a name="'+i+'"></a><i class="glyphicon glyphicon-info-sign"></i>'+umsg+'</p>');
+                }
+
+                $('#message').val(''); 
+                window.location.hash = '#'+i;
+            }
+
+            //发生错误
+            websocket.onerror = function(event){
+                i++;
+                console.log("Connected to WebSocket server error");
+                $('.show-area').append('<p class="bg-danger message"><a name="'+i+'"></a><i class="glyphicon glyphicon-info-sign"></i>Connect to WebSocket server error.</p>');
+                window.location.hash = '#'+i;
+            }
+
+            //连接关闭
+            websocket.onclose = function(event){
+                i++;
+                console.log('websocket Connection Closed. ');
+                $('.show-area').append('<p class="bg-warning message"><a name="'+i+'"></a><i class="glyphicon glyphicon-info-sign"></i>websocket Connection Closed.</p>');
+                window.location.hash = '#'+i;
+            }
+
+            function send(){
+                var name = $('#name').val();
+                var message = $('#message').val();
+                if(!name){
+                    alert('请输入用户名!');
+                    return false;
+                }
+                if(!message){
+                    alert('发送消息不能为空!');
+                    return false;
+                }
+                var msg = {
+                    message: message,
+                    name: name
+                };
+                try{  
+                    websocket.send(JSON.stringify(msg)); 
+                } catch(ex) {  
+                    console.log(ex);
+                }  
+            }
+
+            //按下enter键发送消息
+            $(window).keydown(function(event){
+                if(event.keyCode == 13){
+                    console.log('user enter');
+                    send();
+                }
+            });
+
+            //点发送按钮发送消息
+            $('.send').bind('click',function(){
+                send();
+            });
+
+        }
+        else{
+            alert('该浏览器不支持web socket');
+        }
+
+    });    
+    </script>        
+</body>
+</html>

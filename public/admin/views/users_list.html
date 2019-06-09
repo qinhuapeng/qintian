@@ -1,0 +1,78 @@
+<hgroup id="main-title" class="thin">
+    <h1>管理员列表</h1>
+</hgroup>
+
+<div class="with-padding">
+
+    <div class="wrapped left-icon icon-info-round">
+        Tables are responsive, too! Try resizing your browser
+    </div>
+
+    <!-- <h4>Styled table with simple sorting</h4>
+    <p>Simple sorting and manual controls if you prefer to handle the table output server-side:</p>
+    <p><b>Tip:</b> try clicking on a row to show an extra line style!</p> -->
+    <br>
+    <div class="twelve-columns twelve-columns-mobile qhp-margin-5">
+        <a href="#/users_list_add" class="button">
+            <span class="button-icon"><span class="icon-plus"></span></span>
+            新增管理员
+        </a>
+        <img src="/library/assets/img/standard/loaders/loading32_anthracite.gif" ng-show="init_spinner_display" class="qhp-right">
+    </div>
+
+    <!-- <div class="table-header button-height qhp-button-height">
+        <img src="/library/assets/img/standard/loaders/loading32_anthracite.gif" ng-show="init_spinner_display">
+    </div> -->
+    <table class="table responsive-table" id="sorting-example1">
+
+        <thead>
+            <tr>
+                <th scope="col"><input type="checkbox" name="check-all" id="check-all" value="1"></th>
+                <th scope="col">用户名</th>
+                <th scope="col" width="30%" class="align-center hide-on-mobile">角色</th>
+                <th scope="col" width="15%" class="align-center hide-on-mobile-portrait">操作</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    记录总数：{{totalItems}}
+                </td>
+            </tr>
+        </tfoot>
+
+        <tbody>
+            <tr ng-repeat="row in list">
+                <th scope="row" class="checkbox-cell"><input type="checkbox" name="checked[]" id="check-1" value="1"></th>
+                <td scope="row">{{row.name}}</td>
+                <td>{{row.role_name}}</td>
+                <td class="align-center">
+                    <span class="button-group compact">
+                        <a href="#/users_list_role/{{row.id}}" class="button icon-user with-tooltip" title="修改角色"></a>
+                        <a href="#/users_list_pass/{{row.id}}" class="button icon-lock with-tooltip" title="修改密码"></a>
+                        <!-- <a href="#" class="button icon-gear with-tooltip" title="设置"></a> -->
+                        <a  class="button icon-trash with-tooltip" title="删除账号" ng-click="usersRemoveModal(row)"></a>
+                    </span>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <div class="table-footer button-height large-margin-bottom">
+        <div class="float-right">
+            <uib-pagination class="button-group" first-text="首页" last-text="末页" next-text="下页" previous-text="上页" boundary-links="true" boundary-link-numbers="true" total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" max-size="5" ng-change="pageChanged()">
+                
+            </uib-pagination>
+        </div>
+        <div class="qhp-button-height"></div>
+    </div>
+
+    
+
+</div>
+
+
+<script src="/library/assets/js/qhp.js"></script>

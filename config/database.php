@@ -12,7 +12,8 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
-
+    'fetch' => PDO::FETCH_ASSOC,//无效了
+    
     'default' => env('DB_CONNECTION', 'mysql'),
 
     /*

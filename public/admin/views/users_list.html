@@ -19,14 +19,10 @@
         </div>
     </div>
 </div> -->
-<div class="with-padding useradd_modal">
+<div class="with-padding useradd_modal" style="display: none;">
     <form name="myForm" ng-submit="submitForm(myForm.$valid)" class="form-horizontal" novalidate>
        <div class="twelve-columns twelve-columns-tablet">
-
-
             <fieldset class="fieldset fields-list">
-
-
                 <div class="field-block button-height">
                     <label for="login" class="label"><b>账号</b></label>
                     <input type="text" value="" class="input" ng-model="usersinfo.name" required>
@@ -42,8 +38,6 @@
                     <select class="select" ng-model="usersinfo.role_id" ng-options="v.id as v.name for v in roleList" required>
                         <option value="">请选择管理员角色</option>
                     </select>
-
-                    <!-- <select class="select" ng-model="usersinfo.role_id" ng-options="option.value as option.name for option in roleList" required><option value="0">请选择角色</option></select> -->
                 </div>
 
             </fieldset>
@@ -51,6 +45,8 @@
         </div>
     </form>
 </div>
+
+
 <hgroup id="main-title" class="thin">
     <h1>管理员列表</h1>
 </hgroup>

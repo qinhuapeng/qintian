@@ -1,4 +1,4 @@
-angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $location, $routeParams , $uibModal) {
+angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $location, $routeParams , $uibModal,$compile) {
     $scope.currentPage = 1;//当前页面
     $scope.itemsPerPage = 20;//每页显示条数
     $scope.roleList = [];//角色列表初始化
@@ -47,10 +47,11 @@ angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $
 
     $scope.useraddModal =function()
     {
+        var $html = $compile($('.useradd_modal').html())($scope); 
         $.modal({
             contentAlign: 'center',
             title: 'Modal window',
-            content: $('.useradd_modal').html(),
+            content: $html,
             resizable: false,
             actions: {},
             buttons: {
@@ -62,7 +63,8 @@ angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $
                 '确定': {
                         classes:    'button blue-gradient glossy',
                         click:      function(win) { 
-                            alert($scope.usersinfo);
+                            console.log("usersinfo:"+JSON.stringify($scope.usersinfo));
+                            //alert();
                         }
                 }
 

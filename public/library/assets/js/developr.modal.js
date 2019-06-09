@@ -1524,9 +1524,13 @@
 		 */
 		buttons: {
 			'Close': {
-				classes :	'blue-gradient glossy big full-width',
+				classes :	'blue-gradient glossy big',
 				click :		function(modal) { modal.closeModal(); }
-			}
+			},
+			'Confirm': {
+				classes :	'blue-gradient glossy big',
+				click :		function(modal) { modal.closeModal(); }
+			},
 		},
 
 		/**

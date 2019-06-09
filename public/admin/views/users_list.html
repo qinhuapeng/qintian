@@ -1,3 +1,56 @@
+<!-- <div class="with-padding useradd_modal"  style="display: none;">
+   <div id="modals" class="with-blocker">
+        <div class="modal-blocker visible"></div>
+        <div class="modal" style="left: 572px; top: 406px; opacity: 1; margin-top: 0px;">
+            <div class="modal-bar">
+                <ul class="modal-actions children-tooltip">
+                    <li class="red-hover"><a href="#" title="Close">Close</a></li>
+                </ul>
+                <h3>Modal window</h3>
+            </div>
+            <div class="modal-bg">
+                <div class="modal-content modal-scroll custom-scroll" style="min-width: 200px; min-height: 16px; position: relative; max-width: 1389px; max-height: 807px;">This is an example of standard modal window.
+                    <div class="custom-vscrollbar" style="display: none; opacity: 0;">
+                        <div></div>
+                    </div>
+                </div>
+                <div class="modal-buttons align-right"><button type="button" class="button blue-gradient glossy big full-width">Close</button></div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="with-padding useradd_modal">
+    <form name="myForm" ng-submit="submitForm(myForm.$valid)" class="form-horizontal" novalidate>
+       <div class="twelve-columns twelve-columns-tablet">
+
+
+            <fieldset class="fieldset fields-list">
+
+
+                <div class="field-block button-height">
+                    <label for="login" class="label"><b>账号</b></label>
+                    <input type="text" value="" class="input" ng-model="usersinfo.name" required>
+                </div>
+
+                <div class="field-block button-height">
+                    <label for="pass" class="label"><b>密码</b></label>
+                    <input type="text"  value="" class="input" ng-model="usersinfo.password" required>
+                </div>
+
+                <div class="field-block button-height">
+                    <label for="role" class="label"><b>角色</b></label>
+                    <select class="select" ng-model="usersinfo.role_id" ng-options="v.id as v.name for v in roleList" required>
+                        <option value="">请选择管理员角色</option>
+                    </select>
+
+                    <!-- <select class="select" ng-model="usersinfo.role_id" ng-options="option.value as option.name for option in roleList" required><option value="0">请选择角色</option></select> -->
+                </div>
+
+            </fieldset>
+
+        </div>
+    </form>
+</div>
 <hgroup id="main-title" class="thin">
     <h1>管理员列表</h1>
 </hgroup>
@@ -13,7 +66,8 @@
     <p><b>Tip:</b> try clicking on a row to show an extra line style!</p> -->
     <br>
     <div class="twelve-columns twelve-columns-mobile qhp-margin-5">
-        <a href="#/users_list_add" class="button">
+<!--         <a href="#/users_list_add" class="button">
+ -->        <a ng-click="useraddModal(null)" class="button">
             <span class="button-icon"><span class="icon-plus"></span></span>
             新增管理员
         </a>

@@ -45,7 +45,30 @@ angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $
     }
     $scope.role_list_get();
 
+    $scope.useraddModal =function()
+    {
+        $.modal({
+            contentAlign: 'center',
+            title: 'Modal window',
+            content: $('.useradd_modal').html(),
+            resizable: false,
+            actions: {},
+            buttons: {
 
+                '取消' : {
+                    classes :   'green-gradient',
+                    click :     function(modal) { modal.closeModal(); }
+                },
+                '确定': {
+                        classes:    'button blue-gradient glossy',
+                        click:      function(win) { 
+                            alert($scope.usersinfo);
+                        }
+                }
+
+            },
+        });
+    }
 
 
     $scope.user_info_add = function()

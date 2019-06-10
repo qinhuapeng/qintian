@@ -50,25 +50,30 @@ angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $
         var $html = $compile($('.useradd_modal').html())($scope); 
         $.modal({
             contentAlign: 'center',
-            title: 'Modal window',
+            title: '管理员新增',
             content: $html,
             resizable: false,
-            actions: {},
-            buttons: {
-
-                '取消' : {
-                    classes :   'green-gradient',
-                    click :     function(modal) { modal.closeModal(); }
-                },
-                '确定': {
-                        classes:    'button blue-gradient glossy',
-                        click:      function(win) { 
-                            console.log("usersinfo:"+JSON.stringify($scope.usersinfo));
-                            //alert();
-                        }
-                }
-
+            actions: {
+                '关闭': {
+                        color:  'red',
+                        click:  function(win) { win.closeModal(); }
+                    }
             },
+            // buttons: {
+            //     '取消' : {
+            //         classes :   'green-gradient',
+            //         click :     function(modal) { modal.closeModal(); }
+            //     },
+            //     '确定': {
+            //             classes:    'button blue-gradient glossy',
+            //             click:      function(win) { 
+            //                 console.log("usersinfo:"+JSON.stringify($scope.usersinfo));
+            //                 user_info_add();
+            //             }
+            //     }
+
+            // },
+            buttons: {},
         });
     }
 
@@ -76,15 +81,17 @@ angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $
     $scope.user_info_add = function()
     {  
         $scope.btn_spinner_display = true;
-
         UsersService.users_add($scope.usersinfo).success(function (response) {
             if(response.ret == 0) {
                 $scope.btn_spinner_display = false;
+                $scope.list.unshift(response.data);
                 $.modal.alert('添加成功!');
             } else {
                 $.modal.alert(response.msg);
                 $scope.btn_spinner_display = false;
             }
+            //$('#modals').hide();
+            //modal.closeModal()
         });
         
     }

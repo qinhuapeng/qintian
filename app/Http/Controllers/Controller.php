@@ -52,8 +52,9 @@ class Controller extends BaseController
     {
         $data = array();
         $tabs = DB::table('roles')->where('is_delete',0)->get(['*']);
+
         foreach ($tabs as $key => $value) {
-            $data[$value['id']] = $value['name'];
+            $data[$value->id] = $value->name;
         }
         return $data;
     }

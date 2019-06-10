@@ -90,6 +90,7 @@ angular.module('myApp').controller('UsersCtrl', function($scope, UsersService, $
                 $.modal.alert(response.msg);
                 $scope.btn_spinner_display = false;
             }
+            //$('#modals').modal('hide');
             //$('#modals').hide();
             //modal.closeModal()
         });
